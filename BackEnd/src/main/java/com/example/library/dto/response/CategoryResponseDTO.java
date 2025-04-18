@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryResponseDTO {
-//    private Long id;
+    private Long id;
     private String name;
 } 

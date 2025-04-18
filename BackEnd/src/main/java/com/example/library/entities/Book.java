@@ -30,6 +30,7 @@ public class Book extends BaseEntity {
     @Column(nullable = false, unique = true, length = 100)
     private String image;
 
-    @Column(nullable = false, length = 100)
-    private Long categoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "FK_books_categories", foreignKeyDefinition = "FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE"))
+    private Category category;
 }

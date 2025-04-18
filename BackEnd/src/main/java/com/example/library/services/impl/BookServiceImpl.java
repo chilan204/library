@@ -3,8 +3,10 @@ package com.example.library.services.impl;
 import com.example.library.dto.request.BookRequestDTO;
 import com.example.library.dto.response.BookResponseDTO;
 import com.example.library.entities.Book;
+import com.example.library.entities.Category;
 import com.example.library.mapper.BookMapper;
 import com.example.library.repositories.BookRepository;
+import com.example.library.repositories.CategoryRepository;
 import com.example.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,13 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper) {
+    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -38,7 +42,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDTO> getBooksByCategoryId(Long categoryId) {
-        return bookRepository.findByCategoryId(categoryId).stream()
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        return bookRepository.findByCategory(category).stream()
                 .map(bookMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -59,7 +65,11 @@ public class BookServiceImpl implements BookService {
             book.setPublicationYear(bookDTO.getPublicationYear());
             book.setIsbn(bookDTO.getIsbn());
             book.setImage(bookDTO.getImage());
-            book.setCategoryId(bookDTO.getCategoryId());
+            
+            Category category = categoryRepository.findById(bookDTO.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+            book.setCategory(category);
+            
             Book updatedBook = bookRepository.save(book);
             return bookMapper.toResponseDTO(updatedBook);
         }

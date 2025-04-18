@@ -14,5 +14,5 @@ public class BookResponseDTO {
     private Integer publicationYear;
     private String isbn;
     private String image;
-    private Long categoryId;
-} 
+    private CategoryResponseDTO category;
+}

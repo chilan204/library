@@ -2,11 +2,24 @@ package com.example.library.mapper;
 
 import com.example.library.dto.request.BookRequestDTO;
 import com.example.library.dto.response.BookResponseDTO;
+import com.example.library.dto.response.CategoryResponseDTO;
 import com.example.library.entities.Book;
+import com.example.library.entities.Category;
+import com.example.library.repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookMapper {
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
+
+    @Autowired
+    public BookMapper(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+    }
+
     public Book toEntity(BookRequestDTO dto) {
         Book book = new Book();
         book.setTitle(dto.getTitle());
@@ -14,7 +27,13 @@ public class BookMapper {
         book.setPublicationYear(dto.getPublicationYear());
         book.setIsbn(dto.getIsbn());
         book.setImage(dto.getImage());
-        book.setCategoryId(dto.getCategoryId());
+        book.setCreatedBy("admin"); // Mặc định created_by là admin
+        
+        // Lấy category từ database
+        Category category = categoryRepository.findById(dto.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        book.setCategory(category);
+        
         return book;
     }
 
@@ -26,7 +45,12 @@ public class BookMapper {
         dto.setPublicationYear(entity.getPublicationYear());
         dto.setIsbn(entity.getIsbn());
         dto.setImage(entity.getImage());
-        dto.setCategoryId(entity.getCategoryId());
+        
+        // Chuyển đổi Category entity sang CategoryResponseDTO
+        Category category = entity.getCategory();
+        CategoryResponseDTO categoryDTO = categoryMapper.toResponseDTO(category);
+        dto.setCategory(categoryDTO);
+        
         return dto;
     }
-} 
+}

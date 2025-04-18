@@ -9,7 +9,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "borrowing")
+@Table(name = "borrowings")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,30 +19,21 @@ public class Borrowing extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false, length = 255)
-    private Long bookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
 
-//    @ManyToOne
-//    @JoinColumn(name = "userId", referencedColumnName = "id")
-//    private User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "bookId", referencedColumnName = "id")
-//    private Book book;
-
-    @Column(nullable = false, updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    @Column(nullable = false)
     private LocalDateTime borrowDate;
 
     @Column(nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private LocalDateTime dueDate;
 
-    @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    @Column
     private LocalDateTime returnDate;
 
     @Enumerated(EnumType.STRING)

@@ -3,6 +3,8 @@ package com.example.library.entities.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -12,13 +14,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @CreatedBy
@@ -28,6 +33,7 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    @UpdateTimestamp
     private LocalDateTime modifiedDate;
 
     @LastModifiedBy

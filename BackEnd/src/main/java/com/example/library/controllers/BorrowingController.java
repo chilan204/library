@@ -45,7 +45,7 @@ public class BorrowingController {
         return ResponseEntity.ok(borrowingService.createBorrowing(borrowingDTO));
     }
 
-    @PutMapping("/return/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BorrowingResponseDTO> updateBorrowing(@PathVariable Long id, @RequestBody BorrowingRequestDTO borrowingDTO) {
         BorrowingResponseDTO updatedBorrowing = borrowingService.updateBorrowing(id, borrowingDTO);
         return updatedBorrowing != null ? ResponseEntity.ok(updatedBorrowing) : ResponseEntity.notFound().build();

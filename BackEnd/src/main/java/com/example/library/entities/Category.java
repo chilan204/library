@@ -4,6 +4,8 @@ import com.example.library.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "categories")
 @NoArgsConstructor
@@ -17,4 +19,7 @@ public class Category extends BaseEntity {
 
     @Column(nullable = false, unique = true, length = 255)
     private String name;
+
+//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Book> books;
 }

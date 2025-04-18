@@ -10,12 +10,13 @@ public class CategoryMapper {
     public Category toEntity(CategoryRequestDTO dto) {
         Category category = new Category();
         category.setName(dto.getName());
+        category.setCreatedBy("admin"); // Mặc định created_by là admin
         return category;
     }
 
     public CategoryResponseDTO toResponseDTO(Category entity) {
         CategoryResponseDTO dto = new CategoryResponseDTO();
-//        dto.setId(entity.getId());
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
         return dto;
     }
