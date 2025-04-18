@@ -1,19 +1,20 @@
 package com.example.library.services;
 
-import com.example.library.entities.Book;
+import com.example.library.dto.request.BookRequestDTO;
+import com.example.library.dto.response.BookResponseDTO;
 
 import java.util.List;
 
 public interface BookService {
-    List<Book> getAllBooks();
+    List<BookResponseDTO> getAllBooks();
 
-    Book getBookById(Long id);
+    BookResponseDTO getBookById(Long id);
 
-    List<Book> getBooksByCategoryId(Long categoryId);
+    List<BookResponseDTO> getBooksByCategoryId(Long categoryId);
 
-    Book createBook(Book book);
+    BookResponseDTO createBook(BookRequestDTO bookDTO);
 
-    Book updateBook(Long id, Book updatedBook);
+    BookResponseDTO updateBook(Long id, BookRequestDTO bookDTO);
 
     void deleteBook(Long id);
 }

@@ -1,5 +1,6 @@
 package com.example.library.entities;
 
+import com.example.library.entities.base.BaseEntity;
 import com.example.library.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Borrowing {
+public class Borrowing extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

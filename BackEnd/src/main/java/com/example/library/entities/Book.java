@@ -1,10 +1,8 @@
 package com.example.library.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.library.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Book {
+public class Book extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,19 +27,9 @@ public class Book {
     @Column(nullable = false, unique = true, length = 100)
     private String isbn;
 
+    @Column(nullable = false, unique = true, length = 100)
+    private String image;
+
     @Column(nullable = false, length = 100)
     private Long categoryId;
-
-    @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private LocalDateTime createdDate = LocalDateTime.now();
-
-    @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private LocalDateTime updatedDate = LocalDateTime.now();
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedDate = LocalDateTime.now();
-    }
 }

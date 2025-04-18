@@ -1,17 +1,18 @@
 package com.example.library.services;
 
-import com.example.library.entities.Category;
+import com.example.library.dto.request.CategoryRequestDTO;
+import com.example.library.dto.response.CategoryResponseDTO;
 
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getAllCategories();
+    List<CategoryResponseDTO> getAllCategories();
 
-    Category getCategoryById(Long id);
+    CategoryResponseDTO getCategoryById(Long id);
 
-    Category createCategory(Category category);
+    CategoryResponseDTO createCategory(CategoryRequestDTO categoryDTO);
 
-    Category updateCategory(Long id, Category updatedCategory);
+    CategoryResponseDTO updateCategory(Long id, CategoryRequestDTO categoryDTO);
 
     void deleteCategory(Long id);
 }

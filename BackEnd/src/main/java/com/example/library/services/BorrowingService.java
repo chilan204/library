@@ -1,21 +1,22 @@
 package com.example.library.services;
 
-import com.example.library.entities.Borrowing;
+import com.example.library.dto.request.BorrowingRequestDTO;
+import com.example.library.dto.response.BorrowingResponseDTO;
 
 import java.util.List;
 
 public interface BorrowingService {
-    List<Borrowing> getAllBorrowings();
+    List<BorrowingResponseDTO> getAllBorrowings();
 
-    Borrowing getBorrowingById(Long id);
+    BorrowingResponseDTO getBorrowingById(Long id);
 
-    List<Borrowing> getBorrowingsByUserId(Long userId);
+    List<BorrowingResponseDTO> getBorrowingsByUserId(Long userId);
 
-    List<Borrowing> getBorrowingsByBookId(Long bookId);
+    List<BorrowingResponseDTO> getBorrowingsByBookId(Long bookId);
 
-    Borrowing createBorrowing(Borrowing borrowing);
+    BorrowingResponseDTO createBorrowing(BorrowingRequestDTO borrowingDTO);
 
-    Borrowing updateBorrowing(Long id, Borrowing updatedBorrowing);
+    BorrowingResponseDTO updateBorrowing(Long id, BorrowingRequestDTO borrowingDTO);
 
     void deleteBorrowing(Long id);
 }
