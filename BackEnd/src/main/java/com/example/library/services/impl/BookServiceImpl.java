@@ -2,9 +2,11 @@ package com.example.library.services.impl;
 
 import com.example.library.dto.request.BookRequestDTO;
 import com.example.library.dto.response.BookResponseDTO;
+import com.example.library.entities.Author;
 import com.example.library.entities.Book;
 import com.example.library.entities.Category;
 import com.example.library.mapper.BookMapper;
+import com.example.library.repositories.AuthorRepository;
 import com.example.library.repositories.BookRepository;
 import com.example.library.repositories.CategoryRepository;
 import com.example.library.services.BookService;
@@ -19,12 +21,14 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final CategoryRepository categoryRepository;
+    private final AuthorRepository authorRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, CategoryRepository categoryRepository) {
+    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, CategoryRepository categoryRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.categoryRepository = categoryRepository;
+        this.authorRepository = authorRepository;
     }
 
     @Override
@@ -60,11 +64,15 @@ public class BookServiceImpl implements BookService {
     public BookResponseDTO updateBook(Long id, BookRequestDTO bookDTO) {
         Book book = bookRepository.findById(id).orElse(null);
         if (book != null) {
-            book.setTitle(bookDTO.getTitle());
-            book.setAuthor(bookDTO.getAuthor());
+            book.setName(bookDTO.getName());
+            book.setDescription(bookDTO.getDescription());
             book.setPublicationYear(bookDTO.getPublicationYear());
             book.setIsbn(bookDTO.getIsbn());
             book.setImage(bookDTO.getImage());
+
+            Author author = authorRepository.findById(bookDTO.getAuthorId())
+                    .orElseThrow(() -> new RuntimeException("Author not found"));
+            book.setAuthor(author);
             
             Category category = categoryRepository.findById(bookDTO.getCategoryId())
                     .orElseThrow(() -> new RuntimeException("Category not found"));

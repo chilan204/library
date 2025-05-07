@@ -5,13 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserRequestDTO {
     @NotBlank(message = "Tên đăng nhập không được để trống")
     @Size(max = 100, message = "Tên đăng nhập không được vượt quá 100 ký tự")

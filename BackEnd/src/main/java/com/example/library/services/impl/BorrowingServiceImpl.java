@@ -3,11 +3,18 @@ package com.example.library.services.impl;
 import com.example.library.dto.request.BorrowingRequestDTO;
 import com.example.library.dto.response.BorrowingResponseDTO;
 import com.example.library.entities.Borrowing;
+import com.example.library.entities.User;
 import com.example.library.mapper.BorrowingMapper;
 import com.example.library.repositories.BorrowingRepository;
+import com.example.library.repositories.UserRepository;
 import com.example.library.services.BorrowingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,11 +23,14 @@ import java.util.stream.Collectors;
 public class BorrowingServiceImpl implements BorrowingService {
     private final BorrowingRepository borrowingRepository;
     private final BorrowingMapper borrowingMapper;
+    private final UserRepository userRepository;
+
 
     @Autowired
-    public BorrowingServiceImpl(BorrowingRepository borrowingRepository, BorrowingMapper borrowingMapper) {
+    public BorrowingServiceImpl(BorrowingRepository borrowingRepository, BorrowingMapper borrowingMapper, UserRepository userRepository) {
         this.borrowingRepository = borrowingRepository;
         this.borrowingMapper = borrowingMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -34,6 +44,12 @@ public class BorrowingServiceImpl implements BorrowingService {
     public BorrowingResponseDTO getBorrowingById(Long id) {
         Borrowing borrowing = borrowingRepository.findById(id).orElse(null);
         return borrowing != null ? borrowingMapper.toResponseDTO(borrowing) : null;
+    }
+
+    @Override
+    public List<BorrowingResponseDTO> getBorrowingsOfCurrentUser() {
+        Long currentUserId = getCurrentUserId();
+        return getBorrowingsByUserId(currentUserId);
     }
 
     @Override
@@ -72,5 +88,16 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Override
     public void deleteBorrowing(Long id) {
         borrowingRepository.deleteById(id);
+    }
+
+    public Long getCurrentUserId () {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
+            String username = userDetails.getUsername();
+            return userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"))
+                    .getId();
+        }
+        throw new AccessDeniedException("User not authenticated");
     }
 }

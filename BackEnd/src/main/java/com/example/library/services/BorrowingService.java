@@ -10,6 +10,8 @@ public interface BorrowingService {
 
     BorrowingResponseDTO getBorrowingById(Long id);
 
+    List<BorrowingResponseDTO> getBorrowingsOfCurrentUser();
+
     List<BorrowingResponseDTO> getBorrowingsByUserId(Long userId);
 
     List<BorrowingResponseDTO> getBorrowingsByBookId(Long bookId);

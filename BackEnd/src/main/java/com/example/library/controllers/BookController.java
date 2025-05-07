@@ -5,6 +5,7 @@ import com.example.library.dto.response.BookResponseDTO;
 import com.example.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,17 +37,20 @@ public class BookController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BookResponseDTO> createBook(@RequestBody BookRequestDTO bookDTO) {
         return ResponseEntity.ok(bookService.createBook(bookDTO));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody BookRequestDTO bookDTO) {
         BookResponseDTO updatedBook = bookService.updateBook(id, bookDTO);
         return updatedBook != null ? ResponseEntity.ok(updatedBook) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();

@@ -4,17 +4,25 @@ import com.example.library.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
-@Table(name = "categories")
+@Table(name = "authors")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Category extends BaseEntity {
+public class Author extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private Date birthDate;
 }
