@@ -45,10 +45,6 @@ public class BookMapper {
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         book.setCategory(category);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        book.setCreatedBy(currentUsername);
         
         return book;
     }

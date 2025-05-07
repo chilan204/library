@@ -12,11 +12,6 @@ public class CategoryMapper {
     public Category toEntity(CategoryRequestDTO dto) {
         Category category = new Category();
         category.setName(dto.getName());
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        category.setCreatedBy(currentUsername);
-
         return category;
     }
 

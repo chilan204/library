@@ -3,8 +3,6 @@ package com.example.library.entities.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -23,7 +21,6 @@ public class BaseEntity {
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @CreatedBy
@@ -33,17 +30,9 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    @UpdateTimestamp
     private LocalDateTime modifiedDate;
 
     @LastModifiedBy
     @Column(name = "modified_by")
     private String modifiedBy;
-
-    @PreUpdate
-    protected void onUpdate() {
-//        this.modifiedBy = "NCLtest";
-        this.modifiedDate = LocalDateTime.now();
-    }
 }
-

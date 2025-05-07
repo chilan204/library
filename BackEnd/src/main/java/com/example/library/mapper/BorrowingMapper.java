@@ -49,11 +49,6 @@ public class BorrowingMapper {
         borrowing.setDueDate(dto.getDueDate());
         borrowing.setReturnDate(dto.getReturnDate());
         borrowing.setStatus(dto.getStatus());
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        borrowing.setCreatedBy(currentUsername);
-
         return borrowing;
     }
 
@@ -73,7 +68,6 @@ public class BorrowingMapper {
         dto.setDueDate(entity.getDueDate());
         dto.setReturnDate(entity.getReturnDate());
         dto.setStatus(entity.getStatus().name());
-        
         return dto;
     }
 } 

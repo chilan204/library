@@ -14,11 +14,6 @@ public class AuthorMapper {
         author.setName(dto.getName());
         author.setDescription(dto.getDescription());
         author.setBirthDate(dto.getBirthDate());
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        author.setCreatedBy(currentUsername);
-
         return author;
     }
 
