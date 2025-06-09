@@ -28,10 +28,7 @@ public class Book extends BaseEntity {
     @Column(nullable = false, length = 100)
     private Integer publicationYear;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String isbn;
-
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true, columnDefinition = "LONGTEXT")
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)

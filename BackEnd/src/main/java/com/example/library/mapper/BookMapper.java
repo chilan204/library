@@ -10,8 +10,6 @@ import com.example.library.entities.Category;
 import com.example.library.repositories.AuthorRepository;
 import com.example.library.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -39,7 +37,6 @@ public class BookMapper {
         book.setAuthor(author);
 
         book.setPublicationYear(dto.getPublicationYear());
-        book.setIsbn(dto.getIsbn());
         book.setImage(dto.getImage());
 
         Category category = categoryRepository.findById(dto.getCategoryId())
@@ -60,7 +57,6 @@ public class BookMapper {
         dto.setAuthor(authorDTO);
 
         dto.setPublicationYear(entity.getPublicationYear());
-        dto.setIsbn(entity.getIsbn());
         dto.setImage(entity.getImage());
         
         Category category = entity.getCategory();

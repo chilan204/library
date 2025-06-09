@@ -3,6 +3,7 @@ package com.example.library.mapper;
 import com.example.library.dto.request.UserRequestDTO;
 import com.example.library.dto.response.UserResponseDTO;
 import com.example.library.entities.User;
+import com.example.library.enums.Role;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +15,7 @@ public class UserMapper {
         user.setPhone(dto.getPhone());
         user.setPassword(dto.getPassword());
         user.setUserCode(dto.getUserCode());
-        user.setRole(dto.getRole());
+        user.setRole(Role.USER);
         return user;
     }
 
@@ -25,7 +26,6 @@ public class UserMapper {
         dto.setEmail(entity.getEmail());
         dto.setPhone(entity.getPhone());
         dto.setUserCode(entity.getUserCode());
-        dto.setRole(entity.getRole());
         return dto;
     }
 } 

@@ -34,9 +34,7 @@ public class AuthController {
         }
 
         userRequestDTO.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
-        
-        userRequestDTO.setRole(Role.USER);
-        
+
         UserResponseDTO newUser = userService.createUser(userRequestDTO);
 
         return ResponseEntity.ok("User registered successfully!");

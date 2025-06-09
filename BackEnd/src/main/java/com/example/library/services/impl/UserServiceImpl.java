@@ -8,6 +8,8 @@ import com.example.library.repositories.UserRepository;
 import com.example.library.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
@@ -40,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO createUser(UserRequestDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User savedUser = userRepository.save(user);
         return userMapper.toResponseDTO(savedUser);
     }
@@ -53,7 +57,6 @@ public class UserServiceImpl implements UserService {
             user.setPhone(userDTO.getPhone());
             user.setPassword(userDTO.getPassword());
             user.setUserCode(userDTO.getUserCode());
-            user.setRole(userDTO.getRole());
             User updatedUser = userRepository.save(user);
             return userMapper.toResponseDTO(updatedUser);
         }

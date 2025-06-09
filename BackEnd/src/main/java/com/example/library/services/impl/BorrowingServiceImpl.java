@@ -3,7 +3,6 @@ package com.example.library.services.impl;
 import com.example.library.dto.request.BorrowingRequestDTO;
 import com.example.library.dto.response.BorrowingResponseDTO;
 import com.example.library.entities.Borrowing;
-import com.example.library.entities.User;
 import com.example.library.mapper.BorrowingMapper;
 import com.example.library.repositories.BorrowingRepository;
 import com.example.library.repositories.UserRepository;
@@ -35,7 +34,9 @@ public class BorrowingServiceImpl implements BorrowingService {
 
     @Override
     public List<BorrowingResponseDTO> getAllBorrowings() {
-        return borrowingRepository.findAll().stream()
+        List<Borrowing> borrowings = borrowingRepository.findAllByOrderByDueDateDesc();
+        borrowings.forEach(this::updateStatusIfNeeded);
+        return borrowings.stream()
                 .map(borrowingMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -43,25 +44,37 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Override
     public BorrowingResponseDTO getBorrowingById(Long id) {
         Borrowing borrowing = borrowingRepository.findById(id).orElse(null);
-        return borrowing != null ? borrowingMapper.toResponseDTO(borrowing) : null;
+        if (borrowing != null) {
+            updateStatusIfNeeded(borrowing);
+            return borrowingMapper.toResponseDTO(borrowing);
+        }
+        return null;
     }
 
     @Override
     public List<BorrowingResponseDTO> getBorrowingsOfCurrentUser() {
         Long currentUserId = getCurrentUserId();
-        return getBorrowingsByUserId(currentUserId);
+        List<Borrowing> borrowings = borrowingRepository.findByUserIdOrderByDueDateDesc(currentUserId);
+        borrowings.forEach(this::updateStatusIfNeeded);
+        return borrowings.stream()
+                .map(borrowingMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<BorrowingResponseDTO> getBorrowingsByUserId(Long userId) {
-        return borrowingRepository.findByUserId(userId).stream()
+        @Override
+    public List<BorrowingResponseDTO> getBorrowingsByUserName(String username) {
+        List<Borrowing> borrowings = borrowingRepository.findByUser_UsernameOrderByDueDateDesc(username);
+        borrowings.forEach(this::updateStatusIfNeeded);
+        return borrowings.stream()
                 .map(borrowingMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<BorrowingResponseDTO> getBorrowingsByBookId(Long bookId) {
-        return borrowingRepository.findByBookId(bookId).stream()
+    public List<BorrowingResponseDTO> getBorrowingsByBookName(String name) {
+        List<Borrowing> borrowings = borrowingRepository.findByBook_NameOrderByDueDateDesc(name);
+        borrowings.forEach(this::updateStatusIfNeeded);
+        return borrowings.stream()
                 .map(borrowingMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -78,7 +91,7 @@ public class BorrowingServiceImpl implements BorrowingService {
         Borrowing borrowing = borrowingRepository.findById(id).orElse(null);
         if (borrowing != null) {
             borrowing.setReturnDate(borrowingDTO.getReturnDate());
-            borrowing.setStatus(borrowingDTO.getStatus());
+            updateStatusIfNeeded(borrowing);
             Borrowing updatedBorrowing = borrowingRepository.save(borrowing);
             return borrowingMapper.toResponseDTO(updatedBorrowing);
         }
@@ -99,5 +112,10 @@ public class BorrowingServiceImpl implements BorrowingService {
                     .getId();
         }
         throw new AccessDeniedException("User not authenticated");
+    }
+
+    private void updateStatusIfNeeded(Borrowing borrowing) {
+        borrowing.updateStatusBasedOnTime();
+        borrowingRepository.save(borrowing);
     }
 }

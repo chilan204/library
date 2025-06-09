@@ -2,15 +2,15 @@ package com.example.library.dto.response;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class BorrowingResponseDTO {
     private Long id;
     private UserResponseDTO user;
     private BookResponseDTO book;
-    private LocalDateTime borrowDate;
-    private LocalDateTime dueDate;
-    private LocalDateTime returnDate;
+    private LocalDate borrowDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
     private String status;
 } 

@@ -12,9 +12,9 @@ public interface BorrowingService {
 
     List<BorrowingResponseDTO> getBorrowingsOfCurrentUser();
 
-    List<BorrowingResponseDTO> getBorrowingsByUserId(Long userId);
+    List<BorrowingResponseDTO> getBorrowingsByUserName(String username);
 
-    List<BorrowingResponseDTO> getBorrowingsByBookId(Long bookId);
+    List<BorrowingResponseDTO> getBorrowingsByBookName(String name);
 
     BorrowingResponseDTO createBorrowing(BorrowingRequestDTO borrowingDTO);
 

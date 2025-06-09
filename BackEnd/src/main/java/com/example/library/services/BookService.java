@@ -12,6 +12,8 @@ public interface BookService {
 
     List<BookResponseDTO> getBooksByCategoryId(Long categoryId);
 
+    List<BookResponseDTO> getBooksByAuthorId(Long authorId);
+
     BookResponseDTO createBook(BookRequestDTO bookDTO);
 
     BookResponseDTO updateBook(Long id, BookRequestDTO bookDTO);

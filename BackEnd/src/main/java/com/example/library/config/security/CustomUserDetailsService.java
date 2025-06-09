@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(user -> User.builder()
                         .username(user.getUsername())
                         .password(user.getPassword())
-                        .authorities(user.getRole())
+                        .authorities(String.valueOf(user.getRole()))
                         .build())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }

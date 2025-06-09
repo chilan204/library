@@ -33,7 +33,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDTO> getAllBooks() {
-        return bookRepository.findAll().stream()
+        return bookRepository.findAllByOrderByCreatedDateDesc().stream()
                 .map(bookMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -54,6 +54,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookResponseDTO> getBooksByAuthorId(Long authorId) {
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new RuntimeException("Author not found"));
+        return bookRepository.findByAuthor(author).stream()
+                .map(bookMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public BookResponseDTO createBook(BookRequestDTO bookDTO) {
         Book book = bookMapper.toEntity(bookDTO);
         Book savedBook = bookRepository.save(book);
@@ -67,7 +76,6 @@ public class BookServiceImpl implements BookService {
             book.setName(bookDTO.getName());
             book.setDescription(bookDTO.getDescription());
             book.setPublicationYear(bookDTO.getPublicationYear());
-            book.setIsbn(bookDTO.getIsbn());
             book.setImage(bookDTO.getImage());
 
             Author author = authorRepository.findById(bookDTO.getAuthorId())

@@ -5,7 +5,7 @@ import com.example.library.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "borrowings")
@@ -27,15 +27,27 @@ public class Borrowing extends BaseEntity {
     private Book book;
 
     @Column(nullable = false)
-    private LocalDateTime borrowDate;
+    private LocalDate borrowDate;
 
     @Column(nullable = false)
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     @Column
-    private LocalDateTime returnDate;
+    private LocalDate returnDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
+
+    public boolean updateStatusBasedOnTime() {
+        Status oldStatus = this.status;
+        if (returnDate != null) {
+            this.status = Status.RETURNED;
+        } else if (LocalDate.now().isAfter(dueDate)) {
+            this.status = Status.OVERDUE;
+        } else {
+            this.status = Status.BORROWED;
+        }
+        return !this.status.equals(oldStatus);
+    }
 }

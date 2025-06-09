@@ -9,7 +9,6 @@ public class BookResponseDTO {
     private String description;
     private AuthorResponseDTO author;
     private Integer publicationYear;
-    private String isbn;
     private String image;
     private CategoryResponseDTO category;
 }

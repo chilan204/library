@@ -3,8 +3,6 @@ package com.example.library.mapper;
 import com.example.library.dto.request.CategoryRequestDTO;
 import com.example.library.dto.response.CategoryResponseDTO;
 import com.example.library.entities.Category;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component

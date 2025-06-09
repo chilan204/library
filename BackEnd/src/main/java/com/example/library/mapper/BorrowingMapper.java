@@ -7,11 +7,10 @@ import com.example.library.dto.response.UserResponseDTO;
 import com.example.library.entities.Borrowing;
 import com.example.library.entities.Book;
 import com.example.library.entities.User;
+import com.example.library.enums.Status;
 import com.example.library.repositories.BookRepository;
 import com.example.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -48,7 +47,7 @@ public class BorrowingMapper {
         borrowing.setBorrowDate(dto.getBorrowDate());
         borrowing.setDueDate(dto.getDueDate());
         borrowing.setReturnDate(dto.getReturnDate());
-        borrowing.setStatus(dto.getStatus());
+        borrowing.setStatus(Status.BORROWED);
         return borrowing;
     }
 

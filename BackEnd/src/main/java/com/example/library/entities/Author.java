@@ -4,7 +4,8 @@ import com.example.library.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "authors")
@@ -24,5 +25,5 @@ public class Author extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 }
