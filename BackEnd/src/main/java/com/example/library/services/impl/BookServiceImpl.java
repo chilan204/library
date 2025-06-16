@@ -63,6 +63,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookResponseDTO> searchBooks(String keyword) {
+        return bookRepository.findByNameContainingIgnoreCaseOrderByCreatedDateDesc(keyword).stream()
+                .map(bookMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public BookResponseDTO createBook(BookRequestDTO bookDTO) {
         Book book = bookMapper.toEntity(bookDTO);
         Book savedBook = bookRepository.save(book);

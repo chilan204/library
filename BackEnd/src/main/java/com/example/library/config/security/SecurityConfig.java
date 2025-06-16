@@ -39,12 +39,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/api/**").hasAnyRole("ADMIN")
-//                        .requestMatchers(HttpMethod.PUT, "/api/**").hasAnyRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/auth/register").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -69,7 +69,7 @@ public class SecurityConfig {
         config.addAllowedOriginPattern("*");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
-        config.setAllowCredentials(true); // Nếu frontend có dùng withCredentials
+        config.setAllowCredentials(true);
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

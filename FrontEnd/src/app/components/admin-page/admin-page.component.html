@@ -1,0 +1,88 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzTheme="light"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo flex items-center justify-start py-2">
+      <a href="/landing">
+        <h1 class="text-xl font-bold text-[#EC5504] !uppercase">{{ userName }}</h1>
+      </a>
+    </div>
+    <ul nz-menu  nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed" class="px-4!">
+      <li nz-submenu nzTitle="Thể loại" nzIcon="bars">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="['list-category']">Thêm thể loại</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Tác giả" nzIcon="user">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="['list-author']">Thêm tác giả</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Quản lý sách" nzIcon="book">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="['list-book']">Sách</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Quản lý phiếu mượn" nzIcon="exception">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="['list-borrowing']">Phiếu mượn</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Quản lý người dùng" nzIcon="audit">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="['list-user']">Người dùng</a>
+          </li>
+        </ul>
+      </li>
+
+      <li
+        class="btn-logout"
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Logout' : ''"
+        nzSelected
+        (click)="showConfirmLogout()"
+      >
+        <div class="logout">
+          <nz-icon nzType="logout" class="icon" />
+          <span class="text-logout">LOGOUT</span>
+        </div>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span
+          class="header-trigger"
+          (click)="isCollapsed = !isCollapsed"
+          (keydown.enter)="isCollapsed = !isCollapsed"
+          tabindex="0"
+        >
+          <nz-icon class="trigger" [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

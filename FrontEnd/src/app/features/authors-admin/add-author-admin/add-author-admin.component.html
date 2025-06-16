@@ -1,0 +1,21 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label nzFor="username" nzRequired>Tên tác giả:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tên sách!">
+      <input type="text" nz-input formControlName="name" placeholder="Nhập tên tác giả" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Tiểu sử:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập mô tả!">
+      <input type="text" nz-input formControlName="description" placeholder="Nhập mô tả" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Năm sinh:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập năm sinh tác giả!">
+      <input type="date" nz-input formControlName="birthDate" placeholder="Nhập năm sinh tác giả" />
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">{{ isEdit? 'Cập nhật':'Thêm'}}</button>
+</form>

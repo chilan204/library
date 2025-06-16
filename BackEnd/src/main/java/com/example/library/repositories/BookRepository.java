@@ -13,4 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByOrderByCreatedDateDesc();
     List<Book> findByCategory(Category category);
     List<Book> findByAuthor(Author author);
+    List<Book> findByNameContainingIgnoreCaseOrderByCreatedDateDesc(String keyword);
 }

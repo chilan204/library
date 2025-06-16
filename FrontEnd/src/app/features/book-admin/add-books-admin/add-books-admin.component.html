@@ -1,0 +1,53 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<!--  name-->
+  <nz-form-item>
+    <nz-form-label nzFor="username" nzRequired>Tên sách:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tên sách!">
+      <input type="text" nz-input formControlName="name" placeholder="Nhập tên sách" />
+    </nz-form-control>
+  </nz-form-item>
+<!-- description -->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Mô tả:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập mô tả!">
+      <input type="text" nz-input formControlName="description" placeholder="Nhập mô tả" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- năm xuất bản -->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Năm:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập năm sinh tác giả!">
+      <input type="number" nz-input formControlName="publicationYear" placeholder="Nhập năm sinh tác giả" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Category -->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Thể loại:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập thể loại!">
+      <nz-select formControlName="categoryId">
+        @for (option of listCategory; track option) {
+          <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- Author -->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Tác giả:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tác giả!">
+      <nz-select formControlName="authorId">
+        @for (option of listAuthors; track option) {
+          <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+<!--  Ảnh-->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Ảnh:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập ảnh!">
+      <input type="text" nz-input formControlName="image" placeholder="Nhập ảnh" />
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">{{ isEdit? 'Cập nhật':'Thêm'}}</button>
+</form>

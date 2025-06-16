@@ -1,0 +1,42 @@
+<nz-card nzTitle="Bảng phiếu mượn" [nzExtra]="extraTemplate">
+  <nz-table #basicTable  nzTableLayout="fixed" [nzBordered]="true" [nzData]="listData" [nzShowPagination]="false" >
+    <thead>
+    <tr>
+      <th nzWidth="6%">STT</th>
+      <th>Tên người mượn</th>
+      <th>Tên sách</th>
+      <th>Ngày mượn</th>
+      <th>Hạn trả</th>
+      <th>Ngày trả</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of listData; let i = index" class="text-center">
+      <td>{{ i + 1 }}</td>
+      <td class="text-left" nzEllipsis >{{data.user.username}}</td>
+      <td class="text-left" nzEllipsis >{{data.book.name}}</td>
+      <td class="text-left" nzEllipsis >{{data.borrowDate}}</td>
+      <td class="text-left" nzEllipsis >{{data.dueDate}}</td>
+      <td class="text-left" nzEllipsis >{{data.returnDate}}</td>
+      <td>
+        <div class="flex gap-2 ant-flex-justify-center">
+          <button nz-button nzType="primary" (click)="editData(data.id)" class="btn-edit">
+            <nz-icon nzType="edit" nzTheme="outline" />
+          </button>
+          <button nz-button nzType="primary" (click)="showDeleteConfirm(data.id, data.user.username)" class="btn-delete">
+            <nz-icon nzType="delete" nzTheme="outline" />
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<ng-template #extraTemplate>
+  <button nz-button nzType="primary" (click)="addData()" class="btn-add">
+    <nz-icon nzType="plus" nzTheme="outline"></nz-icon> Thêm phiếu mượn
+  </button>
+</ng-template>
+
+

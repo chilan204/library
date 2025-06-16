@@ -1,0 +1,209 @@
+<section class="px-[5%] py-10">
+  <div class="borrowing-page">
+    <div class="title-borrowing-page !space-y-1">
+      <h1 class="!font-semibold text-lg">Quản lý mượn sách của {{this.userName}} </h1>
+      <p class="text-md !text-[15px] text-gray-500">Theo dõi và quản lý các phiếu mượn sách trong thư viện</p>
+    </div>
+    <div class="main-content mt-10">
+      <nz-tabset>
+        <nz-tab nzTitle="Tất cả">
+          <div class="cards-items flex flex-col gap-4">
+            @for (data of listDataBorrowing; track data.id) {
+              <div class="card-item bg-gray-100 rounded py-5 px-6">
+                <div class="card-item-item flex justify-start items-center gap-3">
+                  <h1 class="text-lg font-bold!">{{data.book.name}}</h1>
+                  <span
+                    class="bg-[#9BB4CD] px-1 rounded-sm text-[#00659e] font-bold"
+                    [ngSwitch]="data.status"
+                    [ngClass]="{
+                      'bg-yellow-100 text-yellow-600 font-bold!': data.status === 'RETURNED',
+                      'bg-red-200 text-red-600 font-bold!': data.status === 'OVERDUE',
+                      'bg-[#9BB4CD] text-[#00659e] font-bold!': data.status === 'BORROWED'
+                    }"
+                  >
+                    <ng-container *ngSwitchCase="'BORROWED'">Đang mượn</ng-container>
+                    <ng-container *ngSwitchCase="'RETURNED'">Đã trả</ng-container>
+                    <ng-container *ngSwitchCase="'OVERDUE'">Quá hạn</ng-container>
+                    <ng-container *ngSwitchDefault>Không xác định</ng-container>
+                  </span>
+                </div>
+                <div class="card-info w-full">
+                  <div class="card-info-detail w-1/2 mt-4  flex justify-between items-center">
+                    <div class="content-left space-y-2!">
+                      <p class="flex items-center gap-2 text-thin text-gray-500">
+                        <fa-icon [icon]="faUser" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Nguời mượn: {{data.user.username}}</span>
+                      </p>
+                      <p class="flex items-center gap-2 text-thin text-gray-500">
+                        <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Ngày mượn: {{data.borrowDate}}</span>
+                      </p>
+                    </div>
+                    <div class="content-right space-y-2!">
+                      <p class="flex items-center gap-2 text-thin text-gray-500">
+                        <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Hạn trả: {{data.dueDate}}</span>
+                      </p>
+                      <p class="flex items-center gap-2 text-thin text-gray-500" *ngIf="data.returnDate">
+                        <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Thực tế trả: {{data.returnDate}}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            }
+          </div>
+        </nz-tab>
+        <nz-tab nzTitle="Đang mượn">
+          <div class="cards-items flex flex-col gap-4">
+            @for (data of listDataBorrowing; track data.id) {
+              @if (data.status === 'BORROWED') {
+                <div class="card-item bg-gray-100 rounded py-5 px-6">
+                  <div class="card-item-item flex justify-start items-center gap-3">
+                    <h1 class="text-lg font-bold!">{{data.book.name}}</h1>
+                    <span
+                      class="bg-[#9BB4CD] px-1 rounded-sm text-[#00659e] font-bold"
+                      [ngSwitch]="data.status"
+                      [ngClass]="{
+                      'bg-[#9BB4CD] text-[#00659e] font-bold!': data.status === 'BORROWED'
+                    }"
+                    >
+                    <ng-container *ngSwitchCase="'BORROWED'">Đang mượn</ng-container>
+                    <ng-container *ngSwitchCase="'RETURNED'">Đã trả</ng-container>
+                    <ng-container *ngSwitchCase="'OVERDUE'">Quá hạn</ng-container>
+                    <ng-container *ngSwitchDefault>Không xác định</ng-container>
+                  </span>
+                  </div>
+                  <div class="card-info w-full">
+                    <div class="card-info-detail w-1/2 mt-4  flex justify-between items-center">
+                      <div class="content-left space-y-2!">
+                        <p class="flex items-center gap-2 text-thin text-gray-500">
+                          <fa-icon [icon]="faUser" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Nguời mượn: {{data.user.username}}</span>
+                        </p>
+                        <p class="flex items-center gap-2 text-thin text-gray-500">
+                          <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Ngày mượn: {{data.borrowDate}}</span>
+                        </p>
+                      </div>
+                      <div class="content-right space-y-2!">
+                        <p class="flex items-center gap-2 text-thin text-gray-500">
+                          <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Hạn trả: {{data.dueDate}}</span>
+                        </p>
+                        <p class="flex items-center gap-2 text-thin text-gray-500" *ngIf="data.returnDate">
+                          <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Thực tế trả: {{data.returnDate}}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+            }
+          </div>
+        </nz-tab>
+        <nz-tab nzTitle="Quá hạn"> <div class="cards-items flex flex-col gap-4">
+          @for (data of listDataBorrowing; track data.id) {
+            @if (data.status === 'OVERDUE') {
+              <div class="card-item bg-gray-100 rounded py-5 px-6">
+                <div class="card-item-item flex justify-start items-center gap-3">
+                  <h1 class="text-lg font-bold!">{{data.book.name}}</h1>
+                  <span
+                    class="bg-[#9BB4CD] px-1 rounded-sm text-[#00659e] font-bold"
+                    [ngSwitch]="data.status"
+                    [ngClass]="{
+                      'bg-red-200 text-red-600 font-bold!': data.status === 'OVERDUE',
+                    }"
+                  >
+                    <ng-container *ngSwitchCase="'OVERDUE'">Quá hạn</ng-container>
+                    <ng-container *ngSwitchDefault>Không xác định</ng-container>
+                  </span>
+                </div>
+                <div class="card-info w-full">
+                  <div class="card-info-detail w-1/2 mt-4  flex justify-between items-center">
+                    <div class="content-left space-y-2!">
+                      <p class="flex items-center gap-2 text-thin text-gray-500">
+                        <fa-icon [icon]="faUser" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Nguời mượn: {{data.user.username}}</span>
+                      </p>
+                      <p class="flex items-center gap-2 text-thin text-gray-500">
+                        <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Ngày mượn: {{data.borrowDate}}</span>
+                      </p>
+                    </div>
+                    <div class="content-right space-y-2!">
+                      <p class="flex items-center gap-2 text-thin text-gray-500">
+                        <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Hạn trả: {{data.dueDate}}</span>
+                      </p>
+                      <p class="flex items-center gap-2 text-thin text-gray-500" *ngIf="data.returnDate">
+                        <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                        <span>Thực tế trả: {{data.returnDate}}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            }
+          }
+        </div></nz-tab>
+        <nz-tab nzTitle="Đã trả">
+          <div class="cards-items flex flex-col gap-4">
+            @for (data of listDataBorrowing; track data.id) {
+              @if (data.status === 'RETURNED') {
+                <div class="card-item bg-gray-100 rounded py-5 px-6">
+                  <div class="card-item-item flex justify-start items-center gap-3">
+                    <h1 class="text-lg font-bold!">{{data.book.name}}</h1>
+                    <span
+                      class="bg-[#9BB4CD] px-1 rounded-sm text-[#00659e] font-bold"
+                      [ngSwitch]="data.status"
+                      [ngClass]="{
+                        'bg-yellow-100 text-yellow-600 font-bold!': data.status === 'RETURNED',
+                    }"
+                    >
+                      <ng-container *ngSwitchCase="'RETURNED'">Đã trả</ng-container>
+                      <ng-container *ngSwitchDefault>Không xác định</ng-container>
+                  </span>
+                  </div>
+                  <div class="card-info w-full">
+                    <div class="card-info-detail w-1/2 mt-4  flex justify-between items-center">
+                      <div class="content-left space-y-2!">
+                        <p class="flex items-center gap-2 text-thin text-gray-500">
+                          <fa-icon [icon]="faUser" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Nguời mượn: {{data.user.username}}</span>
+                        </p>
+                        <p class="flex items-center gap-2 text-thin text-gray-500">
+                          <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Ngày mượn: {{data.borrowDate}}</span>
+                        </p>
+                      </div>
+                      <div class="content-right space-y-2!">
+                        <p class="flex items-center gap-2 text-thin text-gray-500">
+                          <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Hạn trả: {{data.dueDate}}</span>
+                        </p>
+                        <p class="flex items-center gap-2 text-thin text-gray-500" *ngIf="data.returnDate">
+                          <fa-icon [icon]="faCalendar" class="text-xs mb-[2px]"></fa-icon>
+                          <span>Thực tế trả: {{data.returnDate}}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+            }
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </div>
+</section>

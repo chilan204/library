@@ -1,0 +1,14 @@
+.navbar-menu{
+  li{
+    padding-bottom: 10px;
+    a{
+      color: black;
+      &:hover {
+        color: #DF6631;
+      }
+      &.active{
+        color: #DF6611;
+      }
+    }
+  }
+}

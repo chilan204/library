@@ -40,6 +40,11 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBooksByAuthorId(id));
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<BookResponseDTO>> searchBooks(@PathVariable String keyword) {
+        return ResponseEntity.ok(bookService.searchBooks(keyword));
+    }
+
     @PostMapping
     public ResponseEntity<BookResponseDTO> createBook(@RequestBody BookRequestDTO bookDTO) {
         return ResponseEntity.ok(bookService.createBook(bookDTO));

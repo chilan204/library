@@ -1,0 +1,35 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <!--  username-->
+  <nz-form-item>
+    <nz-form-label nzFor="username" nzRequired>Tên:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tên người dùng!">
+      <input type="text" nz-input formControlName="username" placeholder="Nhập tên người dùng" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- description -->
+  <nz-form-item>
+    <nz-form-label nzFor="email" nzRequired>Email:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập email!">
+      <input type="email" nz-input formControlName="email" placeholder="Nhập email" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- phone -->
+  <nz-form-item>
+    <nz-form-label nzFor="phone" nzRequired>Số điện thoại:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập số điện thoại!">
+      <input type="text" nz-input formControlName="phone" placeholder="Nhập số điện thoại" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- userCode -->
+  <nz-form-item>
+    <nz-form-label nzFor="userCode" nzRequired>Code:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập Code!">
+      <input type="text" nz-input formControlName="userCode" placeholder="Nhập Code" />
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button type="submit" class="login-form-button login-form-margin" [nzType]="'primary'">{{ isEdit? 'Cập nhật':'Thêm'}}</button>
+</form>
+

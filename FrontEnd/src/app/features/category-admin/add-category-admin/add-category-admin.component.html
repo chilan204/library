@@ -1,0 +1,10 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label nzFor="username" nzRequired>Tên thể loại:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tên thể loại!">
+        <input type="text" nz-input formControlName="name" placeholder="Nhập tên thể loại" />
+    </nz-form-control>
+
+  </nz-form-item>
+  <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">{{ isEdit? 'Cập nhật':'Thêm'}}</button>
+</form>

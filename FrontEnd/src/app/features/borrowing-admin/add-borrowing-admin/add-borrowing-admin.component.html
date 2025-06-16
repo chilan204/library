@@ -1,0 +1,48 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <!-- userId -->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Tên người mượn:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tên người mượn!">
+      <nz-select formControlName="userId">
+        @for (option of listUsers; track option) {
+          <nz-option [nzLabel]="option.username" [nzValue]="option.id"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- bookId -->
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzRequired>Tên sách mượn:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập tên sách mượn!">
+      <nz-select formControlName="bookId">
+        @for (option of listBook; track option) {
+          <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+<!-- borrowDate -->
+  <nz-form-item>
+    <nz-form-label nzFor="borrowDate" nzRequired>Ngày mượn:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập ngày mượn!">
+      <input type="date" nz-input formControlName="borrowDate" placeholder="Nhập ngày mượn" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- dueDate -->
+  <nz-form-item>
+    <nz-form-label nzFor="dueDate" nzRequired>Hạn trả:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập ngày đến hạn!">
+      <input type="date" nz-input formControlName="dueDate" placeholder="Nhập hạn trả" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- returnDate -->
+  <nz-form-item>
+    <nz-form-label nzFor="returnDate" nzRequired>Ngày trả:</nz-form-label>
+    <nz-form-control nzErrorTip="Vui lòng nhập ngày trả !">
+      <input type="date" nz-input formControlName="returnDate" placeholder="Nhập ngày trả" />
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+    {{ isEdit? 'Cập nhật':'Thêm'}}
+  </button>
+</form>

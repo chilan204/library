@@ -1,0 +1,36 @@
+<nz-card nzTitle="Bảng tác giả" [nzExtra]="extraTemplate">
+  <nz-table #basicTable [nzBordered]="true" [nzData]="listData" [nzShowPagination]="false" nzTableLayout="fixed" >
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Tên tác giả</th>
+      <th>Tiểu sử</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of listData; let i = index" class="text-center">
+      <td>{{ i + 1 }}</td>
+      <td class="text-left"> {{data.name}}</td>
+      <td class="text-left" nzEllipsis > {{data.description}}</td>
+      <td>
+        <div class="flex gap-2 ant-flex-justify-center">
+          <button nz-button nzType="primary" (click)="editData(data.id)" class="btn-edit">
+            <nz-icon nzType="edit" nzTheme="outline" />
+          </button>
+          <button nz-button nzType="primary" (click)="showDeleteConfirm(data.id, data.name)" class="btn-delete">
+            <nz-icon nzType="delete" nzTheme="outline" />
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<ng-template #extraTemplate>
+  <button nz-button nzType="primary" (click)="addData()" class="btn-add">
+    <nz-icon nzType="plus" nzTheme="outline"></nz-icon> Thêm tác giả
+  </button>
+</ng-template>
+
+

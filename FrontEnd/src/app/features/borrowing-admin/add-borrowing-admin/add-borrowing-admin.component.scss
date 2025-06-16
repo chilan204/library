@@ -1,0 +1,12 @@
+::ng-deep .custom-date::-webkit-input-placeholder {
+  color: red;
+}
+::ng-deep .custom-date::-moz-placeholder {
+  color: red;
+}
+::ng-deep .custom-date:-ms-input-placeholder {
+  color: red;
+}
+::ng-deep .custom-date::placeholder {
+  color: red;
+}

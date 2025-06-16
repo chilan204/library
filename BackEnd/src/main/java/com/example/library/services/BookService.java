@@ -14,6 +14,8 @@ public interface BookService {
 
     List<BookResponseDTO> getBooksByAuthorId(Long authorId);
 
+    List<BookResponseDTO> searchBooks(String keyword);
+
     BookResponseDTO createBook(BookRequestDTO bookDTO);
 
     BookResponseDTO updateBook(Long id, BookRequestDTO bookDTO);

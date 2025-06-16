@@ -1,0 +1,21 @@
+::ng-deep .ant-table-thead > tr > th {
+  text-align: center;
+  vertical-align: middle;
+}
+::ng-deep .ant-table-tbody > tr > td {
+  text-align: center;
+  vertical-align: middle;
+  color: #000;
+}
+.btn-delete{
+  background: #f21361;
+  border:none;
+}
+.btn-edit{
+  background: #17c964;
+  border:none;
+}
+.btn-add{
+  background: #07078f;
+  border:none;
+}
